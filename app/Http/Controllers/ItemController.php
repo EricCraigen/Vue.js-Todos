@@ -37,6 +37,7 @@ class ItemController extends Controller
     {
         $new_item = new Item;
         $new_item->name = $request->item['name'];
+        $new_item->group = $request->item['group'];
         $new_item->save();
 
         return $new_item;
@@ -75,6 +76,8 @@ class ItemController extends Controller
     {
         $existing_item = Item::find($id);
         if ($existing_item) {
+            $existing_item->group = $request->item['group'] ? $request->item['group'] : null;
+            $existing_item->status = $request->item['status'] ? $request->item['status'] : null;
             $existing_item->completed = $request->item['completed'] ? true : false;
             $existing_item->completed_at = $request->item['completed'] ? now() : null;
             $existing_item->save();
